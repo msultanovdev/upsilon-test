@@ -13,5 +13,10 @@ export const productsAPI = createApi({
         },
       }),
     }),
+    fetchOneProduct: build.query<IProduct, number | string>({
+      query: (id: number | string) => ({
+        url: `/products/${id}`,
+      }),
+    }),
   }),
 });
