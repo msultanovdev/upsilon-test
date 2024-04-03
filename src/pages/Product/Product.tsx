@@ -17,28 +17,33 @@ const Product = () => {
     return <p>Product not found</p>;
   }
 
+  if (error) {
+    return <p>Ooops... Something wrong :/</p>;
+  }
+
   return (
     <div className={cl.container}>
-      <div className={cl.leftColumn}>
-        <img src={product?.image} alt="" />
-      </div>
+      {!isLoading ? (
+        <>
+          <div className={cl.leftColumn}>
+            {product?.image && <img src={product.image} alt="product image" />}
+          </div>
+          <div className={cl.rightColumn}>
+            <div className={cl.productDescription}>
+              {product?.category && <span>{product.category}</span>}
+              {product?.title && <h2>{product.title}</h2>}
+              {product?.description && <p>{product.description}</p>}
+            </div>
 
-      <div className={cl.rightColumn}>
-        <div className={cl.productDescription}>
-          <span>{product?.category}</span>
-          <h2>{product?.title}</h2>
-          <p>
-            The preferred choice of a vast range of acclaimed DJs. Punchy,
-            bass-focused sound and high isolation. Sturdy headband and on-ear
-            cushions suitable for live performance
-          </p>
-        </div>
-
-        <div className={cl.productPrice}>
-          <span>148$</span>
-          <Button variant="outline-success">Add to cart</Button>
-        </div>
-      </div>
+            <div className={cl.productPrice}>
+              {product?.price && <span>{product.price}$</span>}
+              <Button variant="outline-success">Add to cart</Button>
+            </div>
+          </div>
+        </>
+      ) : (
+        "Loading..."
+      )}
     </div>
   );
 };
