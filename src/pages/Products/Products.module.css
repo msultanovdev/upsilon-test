@@ -18,6 +18,11 @@
 .productsControls button {
   margin-right: 5px;
 }
+.errorMessage {
+  color: gray;
+  font-size: 1.5rem;
+  text-align: center;
+}
 
 @media screen and (max-width: 1400px) {
   .products {
