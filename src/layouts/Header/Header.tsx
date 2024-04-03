@@ -6,7 +6,7 @@ const Header = () => {
     <Navbar expand="lg">
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>Upsilon Test</Navbar.Brand>
+          <Navbar.Brand>Upsilon Shop</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
