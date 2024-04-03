@@ -46,6 +46,7 @@ function Products() {
           return (
             <ProductItem
               key={product.id}
+              id={product.id}
               img={product.image}
               title={product.title}
               price={product.price}

@@ -1,15 +1,19 @@
 import { FC } from "react";
 import "./ProductItem.css";
+import { useNavigate } from "react-router-dom";
 
 interface IProductItemProps {
   img: string;
   title: string;
   price: number;
+  id: number;
 }
 
-const ProductItem: FC<IProductItemProps> = ({ img, title, price }) => {
+const ProductItem: FC<IProductItemProps> = ({ img, title, price, id }) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="el-wrapper">
+    <div className="el-wrapper" onClick={() => navigate(`${id}`)}>
       <div className="box-up">
         <img className="img" src={img} alt="product image" />
         <div className="img-info">
@@ -24,12 +28,12 @@ const ProductItem: FC<IProductItemProps> = ({ img, title, price }) => {
           <div className="h-bg-inner"></div>
         </div>
 
-        <a className="cart" href="#">
+        <p className="cart">
           <span className="price">${price}</span>
           <span className="details">
             <span className="txt">Details</span>
           </span>
-        </a>
+        </p>
       </div>
     </div>
   );
