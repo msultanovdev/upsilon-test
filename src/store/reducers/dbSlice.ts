@@ -26,4 +26,5 @@ export const dbSlice = createSlice({
   },
 });
 
-export default dbSlice.reducer;
+export const { actions: dbActions, reducer: dbReducer } = dbSlice;
+export default dbReducer;

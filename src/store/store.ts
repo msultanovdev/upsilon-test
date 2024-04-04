@@ -1,23 +1,25 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { productSlice } from "./reducers/productSlice";
+import {
+  combineReducers,
+  configureStore,
+  ThunkAction,
+  UnknownAction,
+} from "@reduxjs/toolkit";
+import { productReducer } from "./reducers/productSlice";
 import { productsAPI } from "../services/ProductService";
-import { dbSlice } from "./reducers/dbSlice";
+import { dbReducer } from "./reducers/dbSlice";
 
 const rootReducer = combineReducers({
-  productSlice,
-  dbSlice,
+  productReducer,
+  dbReducer,
   [productsAPI.reducerPath]: productsAPI.reducer,
 });
 
-export const setupStore = () => {
-  return configureStore({
-    reducer: rootReducer,
-    devTools: true,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(productsAPI.middleware),
-  });
-};
+export const store = configureStore({
+  reducer: rootReducer,
+  devTools: true,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(productsAPI.middleware),
+});
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore["dispatch"];
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

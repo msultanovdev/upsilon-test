@@ -2,6 +2,7 @@ import { Form, Button } from "react-bootstrap";
 import cl from "./FormComponent.module.css";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import Product from "../../models/Product.model";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 interface IForm {
   name: string;
@@ -11,6 +12,11 @@ interface IForm {
 }
 
 const FormComponent = () => {
+  const dispatch = useAppDispatch();
+  const products = useAppSelector((state) => state.dbReducer.products);
+
+  console.log(products);
+
   const {
     register,
     handleSubmit,
