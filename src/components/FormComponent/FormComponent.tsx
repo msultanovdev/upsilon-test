@@ -2,7 +2,8 @@ import { Form, Button } from "react-bootstrap";
 import cl from "./FormComponent.module.css";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import Product from "../../models/Product.model";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch } from "../../hooks/redux";
+import { dbSlice } from "../../store/reducers/dbSlice";
 
 interface IForm {
   name: string;
@@ -13,9 +14,7 @@ interface IForm {
 
 const FormComponent = () => {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.dbReducer.products);
-
-  console.log(products);
+  const { addProduct } = dbSlice.actions;
 
   const {
     register,
@@ -34,7 +33,7 @@ const FormComponent = () => {
       Date.now(),
     );
     console.log(newProduct);
-
+    dispatch(addProduct(newProduct));
     reset();
   };
   const error: SubmitErrorHandler<IForm> = (data) => {
