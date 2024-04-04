@@ -10,3 +10,12 @@ export interface IProduct {
     count: number;
   };
 }
+
+export interface IDBProduct {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  published: boolean;
+  created_at: string;
+}

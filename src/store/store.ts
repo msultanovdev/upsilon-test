@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { productSlice } from "./reducers/productSlice";
 import { productsAPI } from "../services/ProductService";
+import { dbSlice } from "./reducers/dbSlice";
 
 const rootReducer = combineReducers({
   productSlice,
+  dbSlice,
   [productsAPI.reducerPath]: productsAPI.reducer,
 });
 
