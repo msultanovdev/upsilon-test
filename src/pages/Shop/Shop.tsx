@@ -2,13 +2,16 @@ import { useState } from "react";
 import cl from "./Shop.module.css";
 import { Tab, Tabs } from "react-bootstrap";
 import Products from "./Products/Products";
+import Tables from "./Tables/Tables";
+import { getLocal, setLocal } from "../../utils/helpers";
 
 function Shop() {
-  const [tabKey, setTabKey] = useState("products");
+  const tabKey = getLocal("tabKey");
 
   return (
     <div className={cl.productsPage}>
       <Tabs
+        onSelect={(k) => setLocal("tabKey", k ?? "products")}
         defaultActiveKey={tabKey}
         id="uncontrolled-tab-example"
         className={`mb-3 ${cl.tabs}`}
@@ -19,7 +22,7 @@ function Shop() {
           <Products />
         </Tab>
         <Tab eventKey="lists" title="Lists">
-          Tab content for Lists
+          <Tables />
         </Tab>
       </Tabs>
     </div>

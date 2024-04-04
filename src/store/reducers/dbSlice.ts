@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IDBProduct } from "../../types/types";
-import { setLocal } from "../../utils/helpers";
+import { getLocal, setLocal } from "../../utils/helpers";
 type productSliceType = {
   products: IDBProduct[];
 };
 
 const initialState: productSliceType = {
-  products: [],
+  products: getLocal("products") ?? [],
 };
 
 export const dbSlice = createSlice({
