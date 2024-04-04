@@ -6,7 +6,7 @@ export default class Product {
     public price: number,
     public description: string,
     public published: boolean,
-    public created_at: string,
+    public created_at: number,
   ) {
     this.id = Date.now().toString();
   }
