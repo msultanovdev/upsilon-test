@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { dbSlice } from "../../store/reducers/dbSlice";
 import { setLocal } from "../../utils/helpers";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IForm {
   name: string;
@@ -48,6 +49,8 @@ const FormComponent = ({ id }: { id?: string }) => {
       );
       dispatch(addProduct(newProduct));
       reset();
+      toast.success("Created!", { autoClose: 2000 });
+      navigate("/products");
     } catch (e) {
       console.log(e);
     }
@@ -71,6 +74,7 @@ const FormComponent = ({ id }: { id?: string }) => {
       });
       setLocal("products", JSON.stringify(updatedProdutcs));
       dispatch(updateProducts(updatedProdutcs));
+      toast.success("Updated!", { autoClose: 2000 });
       navigate("/products");
     } catch (e) {
       console.log(e);
@@ -78,7 +82,7 @@ const FormComponent = ({ id }: { id?: string }) => {
   };
 
   const error: SubmitErrorHandler<IForm> = (data) => {
-    console.log(data);
+    toast.error("Some fields were not validated", { autoClose: 2000 });
   };
 
   const isName = (data: string) => {
