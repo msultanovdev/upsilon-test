@@ -2,17 +2,31 @@ import { useMemo } from "react";
 import { filterType, IProduct } from "../../types/types";
 import ProductItem from "../ProductItem/ProductItem";
 
-interface IFilterProps<T> {
-  items: T[];
+interface IFilterProps {
+  items: IProduct[];
   filter: filterType;
 }
 
-const Filter = <T extends IProduct>({ items, filter }: IFilterProps<T>) => {
+const Filter = ({ items, filter }: IFilterProps) => {
+  const sortProducts = (products: IProduct[], sortBy: string) => {
+    if (!sortBy) {
+      return products;
+    }
+    return products.slice().sort((a, b) => {
+      if (sortBy === "title") {
+        return a.title.localeCompare(b.title);
+      } else if (sortBy === "price") {
+        return a.price - b.price;
+      }
+      return 0;
+    });
+  };
+
   const searchedItems = useMemo(() => {
-    return items.filter((item) =>
+    return sortProducts(items, filter.sortBy).filter((item) =>
       item.title.toLocaleLowerCase().includes(filter.query.toLowerCase()),
     );
-  }, [filter]);
+  }, [filter, items]);
 
   return (
     <>

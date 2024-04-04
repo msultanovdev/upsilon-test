@@ -23,6 +23,12 @@
   font-size: 1.5rem;
   text-align: center;
 }
+.formContainer {
+  display: flex;
+}
+.formContainer input {
+  margin-right: 5px;
+}
 
 @media screen and (max-width: 1400px) {
   .products {
@@ -39,6 +45,16 @@
 }
 
 @media screen and (max-width: 780px) {
+  .formContainer {
+    flex-direction: column;
+  }
+  .formContainer select {
+    margin-top: 5px;
+  }
+  .productsControlsBtns {
+    display: flex;
+    align-items: center;
+  }
   .products {
     grid-template-columns: repeat(auto-fill, 45%);
     justify-content: space-around;

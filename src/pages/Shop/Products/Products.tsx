@@ -10,6 +10,7 @@ const Products = () => {
   const [productsLimit, setProductsLimit] = useState(8);
   const [filter, setFilter] = useState<filterType>({ query: "", sortBy: "" });
   const [searchValue, setSearchValue] = useState("");
+  const [sortBy, setSortBy] = useState("");
   const [value] = useDebounce(searchValue, 1000);
   const {
     error,
@@ -18,18 +19,26 @@ const Products = () => {
   } = productsAPI.useFetchAllProductsQuery(productsLimit);
 
   useEffect(() => {
-    setFilter({ ...filter, query: value });
-  }, [value]);
+    setFilter({ query: searchValue, sortBy });
+  }, [value, sortBy]);
 
   return (
     <>
       <div className={cl.productsControls}>
-        <Form>
+        <Form className={cl.formContainer}>
           <Form.Control
             value={searchValue}
             placeholder="Search..."
             onChange={(e) => setSearchValue(e.target.value)}
           />
+          <Form.Select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            aria-label="Default select example"
+          >
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+          </Form.Select>
         </Form>
         <div className={cl.productsControlsBtns}>
           <Button
