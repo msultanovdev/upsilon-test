@@ -2,20 +2,46 @@ import { Button, Form, Table } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { dbSlice } from "../../../store/reducers/dbSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { IDBProduct } from "../../../types/types";
+import { getLocal, setLocal } from "../../../utils/helpers";
 
 const Tables = () => {
   const products = useAppSelector((store) => store.dbReducer.products);
+  const [list, setList] = useState<IDBProduct[]>([]);
+  const [selectValue, setSelectValue] = useState(
+    getLocal("selectValue") ?? false,
+  );
+
   const dispatch = useAppDispatch();
   const { removeProductById } = dbSlice.actions;
 
   const navigate = useNavigate();
-
   const removeProduct = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: string,
   ) => {
     e.stopPropagation();
     dispatch(removeProductById(id));
+  };
+
+  useEffect(() => {
+    if (selectValue) {
+      const onlySelectedProducts = products.filter(
+        (product) => product.published,
+      );
+      setList(onlySelectedProducts);
+    } else {
+      const onlyunSelectedProducts = products.filter(
+        (product) => !product.published,
+      );
+      setList(onlyunSelectedProducts);
+    }
+  }, [selectValue]);
+
+  const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocal("selectValue", JSON.stringify(e.target.checked));
+    setSelectValue(e.target.checked);
   };
 
   if (products.length === 0) {
@@ -28,6 +54,17 @@ const Tables = () => {
 
   return (
     <>
+      <div>
+        <Form>
+          <Form.Check
+            defaultChecked={selectValue}
+            type="switch"
+            id="custom-switch"
+            label="unpublished/published"
+            onChange={(e) => handleSelect(e)}
+          />
+        </Form>
+      </div>
       <Table className="text-center" striped bordered hover>
         <thead>
           <tr>
@@ -38,7 +75,7 @@ const Tables = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => {
+          {list.map((product) => {
             return (
               <tr
                 key={product.id}

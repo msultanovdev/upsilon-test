@@ -147,7 +147,11 @@ const FormComponent = ({ id }: { id?: string }) => {
         )}
       </Form.Group>
       <Form.Group className="mb-2" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Agree with publishing" />
+        <Form.Check
+          type="checkbox"
+          label="Agree with publishing"
+          {...register("isPublished")}
+        />
       </Form.Group>
       <div className={cl.submitBtnWrapper}>
         {!id ? (
