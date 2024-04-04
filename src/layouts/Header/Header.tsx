@@ -18,6 +18,9 @@ const Header = () => {
               <LinkContainer to="/products">
                 <Nav.Link>Products</Nav.Link>
               </LinkContainer>
+              <LinkContainer to="/form">
+                <Nav.Link>Form</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
