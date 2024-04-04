@@ -4,6 +4,7 @@ import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import Product from "../../models/Product.model";
 import { useAppDispatch } from "../../hooks/redux";
 import { dbSlice } from "../../store/reducers/dbSlice";
+import { getLocal } from "../../utils/helpers";
 
 interface IForm {
   name: string;
@@ -24,17 +25,20 @@ const FormComponent = () => {
   } = useForm<IForm>();
 
   const submit: SubmitHandler<IForm> = (data) => {
-    const { name, price, description, isPublished } = data;
-    const newProduct = new Product(
-      name,
-      price,
-      description,
-      isPublished,
-      Date.now(),
-    );
-    console.log(newProduct);
-    dispatch(addProduct(newProduct));
-    reset();
+    try {
+      const { name, price, description, isPublished } = data;
+      const newProduct = new Product(
+        name,
+        price,
+        description,
+        isPublished,
+        Date.now(),
+      );
+      dispatch(addProduct(newProduct));
+      reset();
+    } catch (e) {
+      console.log(e);
+    }
   };
   const error: SubmitErrorHandler<IForm> = (data) => {
     console.log(data);

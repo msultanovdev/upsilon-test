@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IDBProduct } from "../../types/types";
+import { setLocal } from "../../utils/helpers";
 type productSliceType = {
   products: IDBProduct[];
 };
@@ -14,6 +15,7 @@ export const dbSlice = createSlice({
   reducers: {
     addProduct(state, action) {
       state = { ...state, products: [...state.products, action.payload] };
+      setLocal("products", JSON.stringify(state.products));
       return state;
     },
     removeProductById(state, action) {
