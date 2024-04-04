@@ -13,10 +13,10 @@
 
 .productsControls {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
 }
 .productsControls button {
-  margin-right: 5px;
+  margin-left: 5px;
 }
 .errorMessage {
   color: gray;

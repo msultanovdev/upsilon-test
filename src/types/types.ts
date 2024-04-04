@@ -19,3 +19,8 @@ export interface IDBProduct {
   published: boolean;
   created_at: string;
 }
+
+export type filterType = {
+  sortBy: string;
+  query: string;
+};

@@ -5,6 +5,7 @@
   padding: 15px;
   margin: 15px 5px;
   background-color: #fff;
+  cursor: pointer;
 }
 
 @media (max-width: 1200px) {
