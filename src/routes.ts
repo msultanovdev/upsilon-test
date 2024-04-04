@@ -1,7 +1,7 @@
 import FormPage from "./pages/FormPage/FormPage";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product/Product";
-import Products from "./pages/Products/Products";
+import Shop from "./pages/Shop/Shop";
 
 export const rootRoutes = [
   {
@@ -10,7 +10,7 @@ export const rootRoutes = [
   },
   {
     path: "/products",
-    Component: Products,
+    Component: Shop,
   },
   {
     path: "/products/:id",
