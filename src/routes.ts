@@ -20,4 +20,8 @@ export const rootRoutes = [
     path: "/form",
     Component: FormPage,
   },
+  {
+    path: "/form/:id",
+    Component: FormPage,
+  },
 ];

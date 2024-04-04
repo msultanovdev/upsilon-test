@@ -2,9 +2,10 @@ import { Form, Button } from "react-bootstrap";
 import cl from "./FormComponent.module.css";
 import { SubmitErrorHandler, SubmitHandler, useForm } from "react-hook-form";
 import Product from "../../models/Product.model";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { dbSlice } from "../../store/reducers/dbSlice";
-import { getLocal } from "../../utils/helpers";
+import { setLocal } from "../../utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 interface IForm {
   name: string;
@@ -13,16 +14,27 @@ interface IForm {
   isPublished: boolean;
 }
 
-const FormComponent = () => {
+const FormComponent = ({ id }: { id?: string }) => {
   const dispatch = useAppDispatch();
-  const { addProduct } = dbSlice.actions;
+  const products = useAppSelector((store) => store.dbReducer.products);
+  const { addProduct, updateProducts } = dbSlice.actions;
+  const selectedProduct = products.find((product) => product.id === id);
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
-  } = useForm<IForm>();
+  } = useForm<IForm>({
+    defaultValues: {
+      name: selectedProduct?.name ?? "",
+      description: selectedProduct?.description ?? "",
+      price: selectedProduct?.price ?? undefined,
+      isPublished: selectedProduct?.published ?? false,
+    },
+  });
 
   const submit: SubmitHandler<IForm> = (data) => {
     try {
@@ -40,6 +52,31 @@ const FormComponent = () => {
       console.log(e);
     }
   };
+
+  const update = () => {
+    try {
+      const { name, price, description, isPublished } = getValues();
+      const updatedProduct = {
+        ...selectedProduct,
+        name,
+        price,
+        description,
+        isPublished,
+      };
+      const updatedProdutcs = products.map((product) => {
+        if (product.id === id) {
+          return updatedProduct;
+        }
+        return product;
+      });
+      setLocal("products", JSON.stringify(updatedProdutcs));
+      dispatch(updateProducts(updatedProdutcs));
+      navigate("/products");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const error: SubmitErrorHandler<IForm> = (data) => {
     console.log(data);
   };
@@ -113,9 +150,15 @@ const FormComponent = () => {
         <Form.Check type="checkbox" label="Agree with publishing" />
       </Form.Group>
       <div className={cl.submitBtnWrapper}>
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
+        {!id ? (
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        ) : (
+          <Button onClick={update} variant="success">
+            Update
+          </Button>
+        )}
       </div>
     </Form>
   );

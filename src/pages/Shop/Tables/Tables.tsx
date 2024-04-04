@@ -1,11 +1,14 @@
 import { Button, Form, Table } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { dbSlice } from "../../../store/reducers/dbSlice";
+import { useNavigate } from "react-router-dom";
 
 const Tables = () => {
   const products = useAppSelector((store) => store.dbReducer.products);
   const dispatch = useAppDispatch();
   const { removeProductById } = dbSlice.actions;
+
+  const navigate = useNavigate();
 
   const removeProduct = (id: string) => {
     dispatch(removeProductById(id));
@@ -33,7 +36,10 @@ const Tables = () => {
         <tbody>
           {products.map((product) => {
             return (
-              <tr key={product.id}>
+              <tr
+                key={product.id}
+                onClick={() => navigate(`/form/${product.id}`)}
+              >
                 <td>{product.name}</td>
                 <td>${product.price}</td>
                 <td>
