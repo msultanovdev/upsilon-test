@@ -49,6 +49,7 @@ const FormComponent = ({ id }: { id?: string }) => {
       );
       dispatch(addProduct(newProduct));
       reset();
+      setLocal("tabKey", "list");
       toast.success("Created!", { autoClose: 2000 });
       navigate("/products");
     } catch (e) {

@@ -37,7 +37,7 @@ const Tables = () => {
       );
       setList(onlyunSelectedProducts);
     }
-  }, [selectValue]);
+  }, [selectValue, products]);
 
   const handleSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocal("selectValue", JSON.stringify(e.target.checked));
@@ -75,6 +75,16 @@ const Tables = () => {
           </tr>
         </thead>
         <tbody>
+          {list.length === 0 ? (
+            <tr style={{ textAlign: "center" }}>
+              <td>No products</td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          ) : (
+            ""
+          )}
           {list.map((product) => {
             return (
               <tr
