@@ -1,9 +1,23 @@
-import React from "react";
-import { Form, Table } from "react-bootstrap";
-import { useAppSelector } from "../../../hooks/redux";
+import { Button, Form, Table } from "react-bootstrap";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { dbSlice } from "../../../store/reducers/dbSlice";
 
 const Tables = () => {
   const products = useAppSelector((store) => store.dbReducer.products);
+  const dispatch = useAppDispatch();
+  const { removeProductById } = dbSlice.actions;
+
+  const removeProduct = (id: string) => {
+    dispatch(removeProductById(id));
+  };
+
+  if (products.length === 0) {
+    return (
+      <>
+        <p style={{ textAlign: "center", fontSize: "1.2rem" }}>List is empty</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -13,6 +27,7 @@ const Tables = () => {
             <th>Product Name</th>
             <th>Price</th>
             <th style={{ width: "15%" }}>Published</th>
+            <th style={{ width: "15%" }}></th>
           </tr>
         </thead>
         <tbody>
@@ -20,9 +35,18 @@ const Tables = () => {
             return (
               <tr key={product.id}>
                 <td>{product.name}</td>
-                <td>{product.price}</td>
-                <td className="d-flex justify-content-center">
+                <td>${product.price}</td>
+                <td>
                   <Form.Check disabled defaultChecked={product.published} />
+                </td>
+                <td>
+                  <Button
+                    onClick={() => removeProduct(product.id)}
+                    variant="outline-danger"
+                    size="sm"
+                  >
+                    Remove
+                  </Button>
                 </td>
               </tr>
             );

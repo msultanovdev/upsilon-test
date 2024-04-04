@@ -110,17 +110,7 @@ const FormComponent = () => {
         )}
       </Form.Group>
       <Form.Group className="mb-2" controlId="formBasicCheckbox">
-        <Form.Check
-          type="checkbox"
-          label="Agree with publishing"
-          {...register("isPublished", {
-            required: true,
-            validate: (value) => value === true,
-          })}
-          isInvalid={errors.isPublished ? true : false}
-          feedback={"You have to confirm publishment"}
-          feedbackType="invalid"
-        />
+        <Form.Check type="checkbox" label="Agree with publishing" />
       </Form.Group>
       <div className={cl.submitBtnWrapper}>
         <Button variant="primary" type="submit">

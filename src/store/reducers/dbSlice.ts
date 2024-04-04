@@ -22,6 +22,7 @@ export const dbSlice = createSlice({
       const updatedProducts = state.products.filter(
         (product) => product.id !== action.payload,
       );
+      setLocal("products", JSON.stringify(updatedProducts));
       state = { ...state, products: updatedProducts };
       return state;
     },

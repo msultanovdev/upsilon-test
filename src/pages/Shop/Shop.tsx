@@ -21,7 +21,7 @@ function Shop() {
         <Tab eventKey="products" title="Products">
           <Products />
         </Tab>
-        <Tab eventKey="lists" title="Lists">
+        <Tab eventKey="list" title="List">
           <Tables />
         </Tab>
       </Tabs>
