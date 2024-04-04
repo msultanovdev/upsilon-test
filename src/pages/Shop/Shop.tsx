@@ -1,4 +1,3 @@
-import { useState } from "react";
 import cl from "./Shop.module.css";
 import { Tab, Tabs } from "react-bootstrap";
 import Products from "./Products/Products";

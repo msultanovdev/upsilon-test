@@ -5,9 +5,10 @@ import cl from "./Products.module.css";
 import Filter from "../../../components/Filter/Filter";
 import { filterType } from "../../../types/types";
 import { useDebounce } from "use-debounce";
+import { getLocal, setLocal } from "../../../utils/helpers";
 
 const Products = () => {
-  const [productsLimit, setProductsLimit] = useState(8);
+  const [productsLimit, setProductsLimit] = useState(getLocal("limit") ?? 8);
   const [filter, setFilter] = useState<filterType>({ query: "", sortBy: "" });
   const [searchValue, setSearchValue] = useState("");
   const [sortBy, setSortBy] = useState("");
@@ -20,7 +21,13 @@ const Products = () => {
 
   useEffect(() => {
     setFilter({ query: searchValue, sortBy });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, sortBy]);
+
+  const handleLimit = (limit: number) => {
+    setProductsLimit(limit);
+    setLocal("limit", JSON.stringify(limit));
+  };
 
   return (
     <>
@@ -42,25 +49,19 @@ const Products = () => {
         </Form>
         <div className={cl.productsControlsBtns}>
           <Button
-            onClick={() => {
-              setProductsLimit(8);
-            }}
+            onClick={() => handleLimit(8)}
             variant={`${productsLimit === 8 ? "secondary" : "outline-secondary"}`}
           >
             8
           </Button>
           <Button
-            onClick={() => {
-              setProductsLimit(16);
-            }}
+            onClick={() => handleLimit(16)}
             variant={`${productsLimit === 16 ? "secondary" : "outline-secondary"}`}
           >
             16
           </Button>
           <Button
-            onClick={() => {
-              setProductsLimit(20);
-            }}
+            onClick={() => handleLimit(20)}
             variant={`${productsLimit === 20 ? "secondary" : "outline-secondary"}`}
           >
             20

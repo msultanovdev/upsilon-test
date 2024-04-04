@@ -15,7 +15,7 @@ const ProductItem: FC<IProductItemProps> = ({ img, title, price, id }) => {
   return (
     <div className="el-wrapper" onClick={() => navigate(`${id}`)}>
       <div className="box-up">
-        <img className="img" src={img} alt="product image" />
+        <img className="img" src={img} alt="product" />
         <div className="img-info">
           <div className="info-inner">
             <span className="p-name">{title}</span>

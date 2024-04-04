@@ -26,7 +26,7 @@ const Product = () => {
       {!isLoading ? (
         <>
           <div className={cl.leftColumn}>
-            {product?.image && <img src={product.image} alt="product image" />}
+            {product?.image && <img src={product.image} alt="product" />}
           </div>
           <div className={cl.rightColumn}>
             <div className={cl.productDescription}>
