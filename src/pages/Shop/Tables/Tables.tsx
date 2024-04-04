@@ -10,7 +10,11 @@ const Tables = () => {
 
   const navigate = useNavigate();
 
-  const removeProduct = (id: string) => {
+  const removeProduct = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    id: string,
+  ) => {
+    e.stopPropagation();
     dispatch(removeProductById(id));
   };
 
@@ -47,7 +51,7 @@ const Tables = () => {
                 </td>
                 <td>
                   <Button
-                    onClick={() => removeProduct(product.id)}
+                    onClick={(e) => removeProduct(e, product.id)}
                     variant="outline-danger"
                     size="sm"
                   >
