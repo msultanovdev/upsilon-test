@@ -18,7 +18,7 @@ interface IForm {
 const FormComponent = ({ id }: { id?: string }) => {
   const dispatch = useAppDispatch();
   const products = useAppSelector((store) => store.dbReducer.products);
-  const { addProduct, updateProducts } = dbSlice.actions;
+  const { addProduct, updateProducts, removeProductById } = dbSlice.actions;
   const selectedProduct = products.find((product) => product.id === id);
   const navigate = useNavigate();
 
@@ -51,6 +51,16 @@ const FormComponent = ({ id }: { id?: string }) => {
       reset();
       setLocal("tabKey", "list");
       toast.success("Created!", { autoClose: 2000 });
+      navigate("/products");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const remove = () => {
+    try {
+      dispatch(removeProductById(id));
+      toast.success("Removed!", { autoClose: 2000 });
       navigate("/products");
     } catch (e) {
       console.log(e);
@@ -164,9 +174,18 @@ const FormComponent = ({ id }: { id?: string }) => {
             Submit
           </Button>
         ) : (
-          <Button onClick={update} variant="success">
-            Update
-          </Button>
+          <>
+            <Button
+              style={{ marginRight: "5px" }}
+              onClick={remove}
+              variant="outline-danger"
+            >
+              Remove
+            </Button>
+            <Button onClick={update} variant="success">
+              Update
+            </Button>
+          </>
         )}
       </div>
     </Form>
